@@ -1,0 +1,11 @@
+version: '2.0'
+services:
+  crash-test-dummy:
+    build:
+      context: .
+    networks:
+      - ansible
+
+networks:
+  ansible:
+    external: true

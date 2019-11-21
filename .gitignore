@@ -1,0 +1,9 @@
+*.log
+*.retry
+/.project
+.idea/
+/.ansible.log.swp
+/gh-md-toc
+*.pyc
+/.cache
+/.vscode

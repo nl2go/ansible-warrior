@@ -1,0 +1,5 @@
+---
+- hosts: crash-test-dummy
+  become: true
+  roles:
+    - role: chusiang.helloworld
