@@ -29,6 +29,17 @@ Before getting started, following packages must be installed.
 
 ### Run Ansible Container
 
+Running Ansible inside a container gets rid of very annoying issues that might appear when running it directly on the host
+a.k.a "works on my machine" issue set, which includes:
+
+ - Missing dependencies
+ - Deviating package versions
+ - Local quirks of different host operating systems
+ 
+Those issues become even bigger when your team grows.
+
+This scenario shows how to run Ansible in a Docker container using Docker Compose.
+
 1. Run Ansible container using Docker Compose.
 
         $ docker-compose run ansible
@@ -54,6 +65,12 @@ Before getting started, following packages must be installed.
 You have successfully run Ansible inside the Docker container using [docker-compose.yml](docker-compose.yml).
 
 ### Key Based Authentication
+SSH key authentication is widely preferred over password authentication because it provides more flexibility and safety
+for the user. Private keys are stored on the disk protected by a passphrase specified by the user to prevent unauthorized
+access to the key content.
+
+This scenario shows how to use the private key protected by a passphrase when running the Ansible container utilizing 
+the *ssh-agent* to prevent passphrase retyping.
 
 1. Copy the project test private key to the standard key location.
 
@@ -100,8 +117,13 @@ You have successfully run the playbook `key_authentication.yml` against `crash-t
 
 ### Ansible Galaxy Role
 
-The playbook `galaxy_role.yml` relies on the [Ansible Galaxy](https://galaxy.ansible.com/) Role `chusiang.helloworld`.
+In advanced Ansible projects it's not uncommon to rely on already existing roles created and shared by the community members
+as roles within [Ansible Galaxy](https://galaxy.ansible.com/).
+
+The playbook `galaxy_role.yml` relies on the Ansible Galaxy role `chusiang.helloworld`.
 To be able to execute the playbook the role must be installed first.
+
+This scenario shows how to handle the role dependency management.
 
 1. Create `requirements.yml` within the `roles` directory as required by [Ansible Tower](https://www.ansible.com/products/tower).
 
@@ -138,6 +160,16 @@ To be able to execute the playbook the role must be installed first.
 You have successfully installed an Ansible Galaxy Role and run the `galaxy_role.yml` playbook.
 
 ### Ansible Vault Master Password
+
+Working with Ansible Vault passwords directly can be cumbersome since it's common to protect the secrets using at least one
+dedicated password per inventory or environment. Besides that the secret for a specific inventory/environment must be 
+specified on every playbook execution. This might reduce the productivity while working with the Ansible.
+
+To overcome this issues a personal master password for Ansible Vault inventory/environment password encryption can be
+used.
+
+This scenario shows how to encrypt and persist the Ansible Vault inventory/environment password protected by a personal
+master password. 
 
 1. Run Ansible container.
 
