@@ -184,7 +184,7 @@ password `Abcd1234`.
         
 #### Recap
 
-You have successfully run the `secret_message` playbook while encrypting the `secret_message` variable to `Hello World!`.
+You have successfully run the `secret_message` playbook while decrypting the `secret_message` variable to `Hello World!`.
 
 ## Maintainers
 
