@@ -120,10 +120,10 @@ You have successfully run the playbook `key_authentication.yml` against `crash-t
 In advanced Ansible projects it's not uncommon to rely on already existing roles created and shared by the community members
 as roles within [Ansible Galaxy](https://galaxy.ansible.com/).
 
+This scenario shows how to handle the role dependency management.
+
 The playbook `galaxy_role.yml` relies on the Ansible Galaxy role `chusiang.helloworld`.
 To be able to execute the playbook the role must be installed first.
-
-This scenario shows how to handle the role dependency management.
 
 1. Create `requirements.yml` within the `roles` directory as required by [Ansible Tower](https://www.ansible.com/products/tower).
 
