@@ -244,7 +244,13 @@ password `Abcd1234`.
 You have successfully run the `vault_master_password` playbook while decrypting the `secret_message` variable to `Hello World!`.
 
 ### Ansible Vault Secret
-This scenario relies on existing encrypted Vault password file for the `dev` inventory located at `inventories/dev/.vault-password`.
+
+To protect sensitive data it must be encrypted before sharing it with remote sources. In general any kind of passwords,
+secrets or keys must be encrypted.
+
+This scenario shows how to encrypt arbitrary values for particular inventories/environments. It relies on the existing
+encrypted Vault password file for the `dev` inventory located at `inventories/dev/.vault-password` from the previous
+scenario.
 
 1. Run Ansible container.
 
