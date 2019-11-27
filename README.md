@@ -25,13 +25,13 @@ Before getting started, following packages must be installed.
 
 ## Scenarios
 
-### Run Anisble Container
+### Run Ansible Container
 
 1. Run Ansible container using Docker Compose.
 
         $ docker-compose run ansible
         Skipping SSH Agent start. No private key was found at /tmp/.ssh/id_rsa.
-        Skpping Anisble Vault password decryption. No .vault-password files present.
+        Skpping Ansible Vault password decryption. No .vault-password files present.
         Skipping Ansible Galaxy roles installation. No /ansible/roles/requirements.yml file present.
 
 1. Print Ansible version.
