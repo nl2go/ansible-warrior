@@ -30,7 +30,7 @@ Before getting started, following packages must be installed.
 ### Run Ansible Container
 
 Running Ansible inside a container gets rid of very annoying issues that might appear when running it directly on the host
-a.k.a "works on my machine" issue set, which includes:
+a.k.a the "works on my machine" issue set, which includes:
 
  - Missing dependencies
  - Deviating package versions
