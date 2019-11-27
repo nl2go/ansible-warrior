@@ -64,7 +64,7 @@ This scenario shows how to run Ansible in a Docker container using Docker Compos
 
 #### Recap
 You have successfully run Ansible inside the Docker container using [docker-compose.yml](docker-compose.yml). It contains
-additional configuration required to mount the required project data as a volume into the container as well as the configuration
+additional configuration required to mount the project data as a volume into the container as well as the configuration
 to build and run the test container required for specific playbook executions (e.g. to test SSH key authentication).
 
 ### Key Based Authentication
