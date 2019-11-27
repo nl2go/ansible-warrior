@@ -1,9 +1,10 @@
 # Ansible Warrior
 
-A tutorial that helps to get to know important [Ansible](https://www.ansible.com/) features.
+A tutorial that helps to get to know important [Ansible](https://www.ansible.com/) features around
+SSH Key authentication, secret encryption and [Ansible Galaxy](https://galaxy.ansible.com/) role management.
 
-This project relies on [docker-anisble](https://github.com/nl2go/docker-ansible) image enhanced with
-convenience features around SSH Key authentication, secret encryption and [Ansible Galaxy](https://galaxy.ansible.com/) role management. 
+This project relies on [nl2go/docker-ansible](https://github.com/nl2go/docker-ansible) providing a [Docker](https://www.docker.com/)
+image for Ansible with additional convenience features.
 
 ## Prerequisites
 
