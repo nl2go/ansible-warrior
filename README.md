@@ -1,8 +1,9 @@
 # Ansible Warrior
 
-Containerized [Ansible](https://www.ansible.com/) CLI.
+A tutorial that helps to get to know important [Ansible](https://www.ansible.com/) features.
 
-Contains additional tools/packages (s. [Dockerfile](Dockerfile)).
+This project relies on [docker-anisble](https://github.com/nl2go/docker-ansible) image enhanced with
+convenience features around SSH Key authentication, secret encryption and [Ansible Galaxy](https://galaxy.ansible.com/) role management. 
 
 ## Prerequisites
 
