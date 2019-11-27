@@ -137,7 +137,7 @@ To be able to execute the playbook the role must be installed first.
 #### Recap
 You have successfully installed an Ansible Galaxy Role and run the `galaxy_role.yml` playbook.
 
-### Ansible Vault Secret
+### Ansible Vault Master Password
 
 1. Run Ansible container.
 
@@ -163,11 +163,10 @@ password `Abcd1234`.
         Enter decryption password for .vault-password files: 
         Decrypting /ansible/inventories/dev/.vault-password.
         Skipping Ansible Galaxy roles installation. No /ansible/roles/requirements.yml file present.
-    
 
-1. Run `secret_message` playbook.
+1. Run `vault_master_password` playbook.
 
-        $ ansible-playbook -i inventories/dev/hosts.ini secret_message.yml
+        $ ansible-playbook -i inventories/dev/hosts.ini vault_master_password.yml
         
         PLAY [localhost] ***********************************************************
         
@@ -181,10 +180,77 @@ password `Abcd1234`.
         
         PLAY RECAP *****************************************************************
         localhost                  : ok=2    changed=0    unreachable=0    failed=0   
+
+1. Exit Ansible container.
+    
+        $ exit
         
 #### Recap
 
-You have successfully run the `secret_message` playbook while decrypting the `secret_message` variable to `Hello World!`.
+You have successfully run the `vault_master_password` playbook while decrypting the `secret_message` variable to `Hello World!`.
+
+### Ansible Vault Secret
+This scenario relies on existing encrypted Vault password file for the `dev` inventory located at `inventories/dev/.vault-password`.
+
+1. Run Ansible container.
+
+        $ docker-compose run ansible
+        
+1. Run Ansible container and specify the Vault master password `master`.
+
+        $ docker-compose run ansible
+        Skipping SSH Agent start. No private key was found at /tmp/.ssh/id_rsa.
+        Decrypting Ansible Vault passwords.
+        Enter decryption password for .vault-password files: 
+        Decrypting /ansible/inventories/dev/.vault-password.
+        Skipping Ansible Galaxy roles installation. No /ansible/roles/requirements.yml file present.
+        
+1. Encrypt secret value `foobar123` for the `dev` inventory.
+
+        $ ansible-vault encrypt_string --encrypt-vault-id 'dev' 'foobar123'
+        !vault |
+                  $ANSIBLE_VAULT;1.2;AES256;dev
+                  34313833626331373036336338663831333833356532306363336532306362376232653835613035
+                  6131303730313238633938636564663866356164383735610a353133613363663239326337313231
+                  64333737343634356531383864313031333134646264373035626363363865343037306436363462
+                  3832363461623233620a383135343062643433613763656462623565346363303866376264643661
+                  6236
+        Encryption successful
+
+1. Replace the plain `bar` value within `inventories/dev/host_vars/localhost/foo.yml` with the encrypted
+value from the previous step and verify the result.
+
+        $ cat inventories/dev/host_vars/localhost/foo.yml
+        ---
+        bar: !vault |
+          $ANSIBLE_VAULT;1.2;AES256;dev
+          34313833626331373036336338663831333833356532306363336532306362376232653835613035
+          6131303730313238633938636564663866356164383735610a353133613363663239326337313231
+          64333737343634356531383864313031333134646264373035626363363865343037306436363462
+          3832363461623233620a383135343062643433613763656462623565346363303866376264643661
+          6236
+         
+1. Run the `vault_secret` playbook.
+
+        $ ansible-playbook -i inventories/dev/hosts.ini vault_secret.yml
+        
+        PLAY [localhost] ***********************************************************
+        
+        TASK [Gathering Facts] *****************************************************
+        ok: [localhost]
+        
+        TASK [debug] ***************************************************************
+        ok: [localhost] => {
+            "msg": "foobar123"
+        }
+        
+        PLAY RECAP *****************************************************************
+        localhost                  : ok=2    changed=0    unreachable=0    failed=0   
+
+#### Recap
+
+You have successfully encrypted an existing variable `bar` and executed the `vault_secret` playbook that
+utilizes the encrypted variable.
 
 ## Maintainers
 
