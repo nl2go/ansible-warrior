@@ -1,7 +1,8 @@
 # Ansible Warrior
 
 A tutorial that helps to get to know important [Ansible](https://www.ansible.com/) features around
-SSH Key authentication, secret encryption and [Ansible Galaxy](https://galaxy.ansible.com/) role management.
+SSH Key authentication, secret encryption and [Ansible Galaxy](https://galaxy.ansible.com/) role management required
+for any mature Ansible project.
 
 This project relies on [nl2go/docker-ansible](https://github.com/nl2go/docker-ansible) providing a [Docker](https://www.docker.com/)
 image for Ansible with additional convenience features.
@@ -62,7 +63,9 @@ This scenario shows how to run Ansible in a Docker container using Docker Compos
         $ exit
 
 #### Recap
-You have successfully run Ansible inside the Docker container using [docker-compose.yml](docker-compose.yml).
+You have successfully run Ansible inside the Docker container using [docker-compose.yml](docker-compose.yml). It contains
+additional configuration required to mount the required project data as a volume into the container as well as the configuration
+to build and run the test container required for specific playbook executions (e.g. to test SSH key authentication).
 
 ### Key Based Authentication
 SSH key authentication is widely preferred over password authentication because it provides more flexibility and safety
