@@ -1,11 +1,14 @@
 version: '2.0'
 services:
+  ansible:
+    image: nl2go/ansible:latest
+    tty: true
+    stdin_open: true
+    volumes:
+      - .:/ansible
+      - $HOME$USERPROFILE/.ssh:/tmp/.ssh
+    depends_on:
+      - crash-test-dummy
   crash-test-dummy:
     build:
       context: .
-    networks:
-      - ansible
-
-networks:
-  ansible:
-    external: true
