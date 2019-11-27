@@ -92,7 +92,20 @@ the *ssh-agent* to prevent passphrase retyping.
         Identity added: /root/.ssh/id_rsa (/root/.ssh/id_rsa)
         ...
  
-1. Run Ansible playbook `key_authentication.yml`
+1. Inspect `key_authentication` Ansible playbook.
+
+        $ cat key_authentication.yml
+        ---
+        - hosts: crash-test-dummy
+          gather_facts: no
+          tasks:
+            - name: Test SSH connection using private/public key pair.
+              ping:
+ 
+    The playbook connects to the remote `crash-test-dummy` host and executes the `ping` module, which performs basic
+    connection and host sanity checks.
+    
+1. Run `key_authentication` Ansible playbook.
 
         $ ansible-playbook -i inventories/dev/hosts.ini key_authentication.yml
         
@@ -122,8 +135,17 @@ as roles within [Ansible Galaxy](https://galaxy.ansible.com/).
 
 This scenario shows how to handle the role dependency management.
 
-The playbook `galaxy_role.yml` relies on the Ansible Galaxy role `chusiang.helloworld`.
-To be able to execute the playbook the role must be installed first.
+1. Inspect `galaxy_role.yml` to extract the required role dependencies.
+
+        $ cat galaxy_role.yml 
+          ---
+          - hosts: crash-test-dummy
+            become: true
+            roles:
+              - role: chusiang.helloworld
+
+    The playbook `galaxy_role` relies on the Ansible Galaxy role `chusiang.helloworld`.
+    To be able to execute the playbook the role must be installed first.
 
 1. Create `requirements.yml` within the `roles` directory as required by [Ansible Tower](https://www.ansible.com/products/tower).
 
