@@ -48,8 +48,7 @@ Before getting started, following packages must be installed.
 
 1. Exit Ansible container.
     
-        $ exit         
-
+        $ exit
 
 #### Recap
 You have successfully run Ansible inside the Docker container using [docker-compose.yml](docker-compose.yml).
@@ -88,6 +87,13 @@ You have successfully run Ansible inside the Docker container using [docker-comp
         PLAY RECAP *****************************************************************
         crash-test-dummy           : ok=1    changed=0    unreachable=0    failed=0   
 
+1. Exit Ansible container.
+    
+        $ exit
+
+1. Remove project test private key
+
+        $ rm ~/.ssh/id_rsa
 
 #### Recap
 You have successfully run the playbook `key_authentication.yml` against `crash-test-dummy` host using SSH key authentication.
@@ -104,25 +110,81 @@ To be able to execute the playbook the role must be installed first.
 1. Add `chusiang.helloworld` role to the `roles/requirements.yml`.
 
         $ echo '- src: chusiang.helloworld' > roles/requirements.yml
-        
-1. Install roles from `roles/requirements.yml`.
 
-        $ ansible-galaxy-init
+1. Run Ansible container.
+
+        $ docker-compose run ansible
+        Skipping SSH Agent start. No private key was found at /tmp/.ssh/id_rsa.
+        Skpping Anisble Vault password decryption. No .vault-password files present.
         Installing Ansible Galaxy roles from /ansible/roles/requirements.yml.
         - downloading role 'helloworld', owned by chusiang
         - downloading role from https://github.com/chusiang/helloworld.ansible.role/archive/master.tar.gz
         - extracting chusiang.helloworld to /root/.ansible/roles/chusiang.helloworld
         - chusiang.helloworld (master) was installed successfully
-
+        
 1. Run `galaxy_role.yml` playbook.
 
         $ ansible-playbook -i inventories/dev/hosts.ini galaxy_role.yml
+
+1. Exit Ansible container.
+    
+        $ exit
+        
+1. Remove `roles/requirements.yml`.
+
+        $ rm roles/requirements.yml
+
+#### Recap
+You have successfully installed an Ansible Galaxy Role and run the `galaxy_role.yml` playbook.
+
+### Ansible Vault Secret
+
+1. Run Ansible container.
+
+        $ docker-compose run ansible
+        
+1. Generate encrypted vault password file for the `dev` inventory using master password `master` and the inventory Vault
+password `Abcd1234`.
+
+        $ cd inventories/dev
+        $ ansible-encrypt-vault-password
+        Enter the master password for .vault-password files:
+        Enter the vault password for dev inventory:
+        
+1. Exit Ansible container.
+    
+        $ exit
+
+1. Run Ansible container and specify the Vault master password `master`.
+
+        $ docker-compose run ansible
+        Skipping SSH Agent start. No private key was found at /tmp/.ssh/id_rsa.
+        Decrypting Ansible Vault passwords.
+        Enter decryption password for .vault-password files: 
+        Decrypting /ansible/inventories/dev/.vault-password.
+        Skipping Ansible Galaxy roles installation. No /ansible/roles/requirements.yml file present.
+    
+
+1. Run `secret_message` playbook.
+
+        $ ansible-playbook -i inventories/dev/hosts.ini secret_message.yml
+        
+        PLAY [localhost] ***********************************************************
+        
+        TASK [Gathering Facts] *****************************************************
+        ok: [localhost]
+        
+        TASK [debug] ***************************************************************
+        ok: [localhost] => {
+            "msg": "Hello World!"
+        }
+        
+        PLAY RECAP *****************************************************************
+        localhost                  : ok=2    changed=0    unreachable=0    failed=0   
         
 #### Recap
-You have successfully installed an Ansible Galaxy Role and run the `galaxy_role.yml` playbook. Next time you start the
-Ansible container any Ansible Galaxy Roles specified within `roles/requirements.yml` will be installed automatically.
 
-
+You have successfully run the `secret_message` playbook while encrypting the `secret_message` variable to `Hello World!`.
 
 ## Maintainers
 
