@@ -196,7 +196,7 @@ You have successfully installed an Ansible Galaxy Role and run the `galaxy_role.
 
 Working with Ansible Vault passwords directly can be cumbersome since it's common to protect the secrets using at least one
 dedicated password per inventory or environment. Besides that the secret for a specific inventory/environment must be 
-specified on every playbook execution. This might reduce the productivity while working with the Ansible.
+specified on every playbook execution. This might reduce the productivity while working with Ansible.
 
 To overcome this issues a personal master password for Ansible Vault inventory/environment password encryption can be
 used.
