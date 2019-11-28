@@ -1,5 +1,5 @@
 ---
-- hosts: crash-test-dummy
+- hosts: localhost
   become: true
   roles:
     - role: chusiang.helloworld

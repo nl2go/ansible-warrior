@@ -158,6 +158,14 @@ This scenario shows how to handle the role dependency management.
 
         $ echo '- src: chusiang.helloworld' > roles/requirements.yml
 
+1. Inspect the content of `roles/requirements.yml`.
+
+        $ cat roles/requirements.yml
+        - src: chusiang.helloworld
+        
+    The `requirements.yml` now contains the required role dependency that will be installed
+    from the Ansible Galaxy.
+
 1. Run Ansible container.
 
         $ docker-compose run ansible
