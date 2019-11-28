@@ -152,7 +152,7 @@ This scenario shows how to handle the role dependency management.
 
 1. Create `requirements.yml` within the `roles` directory as required by [Ansible Tower](https://www.ansible.com/products/tower).
 
-        $ touch roles/requirements.yml
+        $ mkdir roles && touch roles/requirements.yml
         
 1. Add `chusiang.helloworld` role to the `roles/requirements.yml`.
 
