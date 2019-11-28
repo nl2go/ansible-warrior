@@ -329,6 +329,12 @@ value from the previous step and verify the result.
 You have successfully encrypted an existing variable `bar` and executed the `vault_secret` playbook that
 utilizes the encrypted variable.
 
+## Post-Processing
+
+1. Restore your SSH private key to the original location
+
+        $ mv ~/.ssh/id_rsa_backup ~/.ssh/id_rsa
+
 ## Maintainers
 
 - [build-failure](https://github.com/build-failure)
