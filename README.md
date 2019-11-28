@@ -215,6 +215,12 @@ password `Abcd1234`.
         $ ansible-encrypt-vault-password
         Enter the master password for .vault-password files:
         Enter the vault password for dev inventory:
+        Created /ansible/inventories/dev/.vault-password.
+        
+1. Inspect the content of the encrypted vault password file:
+
+        $ cat .vault-password
+        Salted__��iwC�Z���+'�|���;��       
         
 1. Exit Ansible container.
     
