@@ -1,5 +1,5 @@
 ---
-- hosts: crash-test-dummy
+- hosts: node
   gather_facts: no
   tasks:
     - name: Test SSH connection using private/public key pair.

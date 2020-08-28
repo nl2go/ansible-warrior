@@ -22,9 +22,16 @@ Before getting started, following packages must be installed.
         $ git clone https://github.com/nl2go/ansible-warrior.git
         $ cd ansible-warrior
 
-2. Backup your current private key if present.
+## Setup
 
-        $ mv ~/.ssh/id_rsa ~/.ssh/id_rsa_backup
+The tutorial solely involves interactions within the host machine. The setup
+consists of two Docker containers:
+- `ansible` - the Ansible Controller
+- `node` - a node to be controlled by Ansible
+
+See [docker-compose.yml](docker-compose.yml) for further details.
+
+![Setup Overview](./docs/dist/setup-overview.png "Setup Overview")
 
 ## Scenarios
 
@@ -75,9 +82,13 @@ access to the key content.
 This scenario shows how to use the private key protected by a passphrase when running the Ansible container utilizing 
 the *ssh-agent* to prevent passphrase retyping.
 
-1. Copy the project test private key to the standard key location.
+1. The test private key is located at `.docker/root/.ssh/id_rsa`.
 
-       $ cp .docker/root/.ssh/id_rsa ~/.ssh/id_rsa
+       $ ls .docker/root/.ssh
+       drwxr-xr-x 3 user  user  4096 Aug 28 12:40 .
+       drwxr-xr-x 3 user  user  4096 Aug 28 12:36 ..
+       -rw-r--r-- 1 user  user   381 Aug 28 12:36 authorized_keys
+       -rw-r--r-- 1 user  user  1766 Aug 28 12:36 id_rsa
   
 1. Run Ansible container.
 
@@ -99,26 +110,26 @@ the *ssh-agent* to prevent passphrase retyping.
 
         $ cat key_authentication.yml
         ---
-        - hosts: crash-test-dummy
+        - hosts: node
           gather_facts: no
           tasks:
             - name: Test SSH connection using private/public key pair.
               ping:
  
-    The playbook connects to the remote `crash-test-dummy` host and executes the `ping` module, which performs basic
+    The playbook connects to the remote `node` host and executes the `ping` module, which performs basic
     connection and host sanity checks.
     
 1. Run `key_authentication` Ansible playbook.
 
         $ ansible-playbook -i inventories/dev/hosts.ini key_authentication.yml
         
-        PLAY [crash-test-dummy] ****************************************************
+        PLAY [node] ****************************************************
         
         TASK [Test SSH connection using private/public key pair.] ******************
-        ok: [crash-test-dummy]
+        ok: [node]
         
         PLAY RECAP *****************************************************************
-        crash-test-dummy           : ok=1    changed=0    unreachable=0    failed=0   
+        node           : ok=1    changed=0    unreachable=0    failed=0   
 
 1. Exit Ansible container.
     
@@ -129,7 +140,7 @@ the *ssh-agent* to prevent passphrase retyping.
         $ rm ~/.ssh/id_rsa
 
 #### Recap
-You have successfully run the playbook `key_authentication.yml` against `crash-test-dummy` host using SSH key authentication.
+You have successfully run the playbook `key_authentication.yml` against `node` host using SSH key authentication.
 
 ### Ansible Galaxy Role
 
@@ -142,7 +153,7 @@ This scenario shows how to handle the role dependency management.
 
         $ cat galaxy_role.yml 
           ---
-          - hosts: crash-test-dummy
+          - hosts: node
             become: true
             roles:
               - role: chusiang.helloworld

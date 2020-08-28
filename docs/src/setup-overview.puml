@@ -1,0 +1,16 @@
+@startuml
+skinparam componentStyle rectangle
+
+
+
+rectangle "Host machine" {
+
+  rectangle "Docker" {
+    node ansible<<Container>>
+    node node<<Container>>
+  }
+}
+
+ansible -r-> node: SSH
+
+@enduml

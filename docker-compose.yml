@@ -6,9 +6,9 @@ services:
     stdin_open: true
     volumes:
       - .:/ansible
-      - $HOME$USERPROFILE/.ssh:/tmp/.ssh
+      - .docker/root/.ssh:/tmp/.ssh
     depends_on:
-      - crash-test-dummy
-  crash-test-dummy:
+      - node
+  node:
     build:
       context: .
