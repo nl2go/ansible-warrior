@@ -105,10 +105,6 @@ the *ssh-agent* to prevent passphrase retyping.
     
         $ exit
 
-1. Remove project test private key
-
-        $ rm ~/.ssh/id_rsa
-
 #### Recap
 You have successfully run the playbook `key_authentication.yml` against `node` host using SSH key authentication.
 
