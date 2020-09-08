@@ -35,9 +35,7 @@ See [docker-compose.yml](docker-compose.yml) for further details.
 
 ## Scenarios
 
-### Run Ansible Container
-
-Running Ansible inside a container gets rid of very annoying issues that might appear when running it directly on the host
+Using Ansible inside a container gets rid of very annoying issues that might appear when running it directly on the host
 a.k.a the "works on my machine" issue set, which includes:
 
  - Missing dependencies
@@ -45,34 +43,6 @@ a.k.a the "works on my machine" issue set, which includes:
  - Local quirks of different host operating systems
  
 Those issues become even bigger when your team grows.
-
-This scenario shows how to run Ansible in a Docker container using Docker Compose.
-
-1. Run Ansible container using Docker Compose.
-
-        $ docker-compose run ansible
-        Skipping SSH Agent start. No private key was found at /tmp/.ssh/id_rsa.
-        Skpping Ansible Vault password decryption. No .vault-password files present.
-        Skipping Ansible Galaxy roles installation. No /ansible/roles/requirements.yml file present.
-
-1. Print Ansible version.
-
-        $ ansible --version
-        ansible 2.7.0
-          config file = None
-          configured module search path = ['/root/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
-          ansible python module location = /usr/lib/python3.7/site-packages/ansible
-          executable location = /usr/bin/ansible
-          python version = 3.7.5 (default, Oct 17 2019, 12:25:15) [GCC 8.3.0]
-
-1. Exit Ansible container.
-    
-        $ exit
-
-#### Recap
-You have successfully run Ansible inside the Docker container using [docker-compose.yml](docker-compose.yml). It contains
-additional configuration required to mount the project data as a volume into the container as well as the configuration
-to build and run the test container required for specific playbook executions (e.g. to test SSH key authentication).
 
 ### Key Based Authentication
 SSH key authentication is widely preferred over password authentication because it provides more flexibility and safety
@@ -339,12 +309,6 @@ value from the previous step and verify the result.
 
 You have successfully encrypted an existing variable `bar` and executed the `vault_secret` playbook that
 utilizes the encrypted variable.
-
-## Post-Processing
-
-1. Restore your SSH private key to the original location
-
-        $ mv ~/.ssh/id_rsa_backup ~/.ssh/id_rsa
 
 ## Maintainers
 
